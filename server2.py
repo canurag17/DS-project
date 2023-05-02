@@ -1,6 +1,6 @@
 import socket
 
-HOST = socket.gethostbyname(socket.gethostname())  # The server's hostname or IP address
+HOST = '192.168.157.136'  # The server's hostname or IP address
 PORT = 2050        # The port used by the server
 
 # create a socket object

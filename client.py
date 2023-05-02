@@ -17,7 +17,8 @@ def click_join():
 
     connect_port1 = 2050
     comms_socket1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    comms_socket1.connect((ip,  connect_port1))
+    ip3='192.168.157.136'
+    comms_socket1.connect((ip3,  connect_port1))
 
     s = "Game has started!"
     comms_socket1.send(s.encode("UTF-8"))
@@ -55,9 +56,10 @@ def click_join():
         # show game situation now
         layout()
         if enemySeaClient.flag == 2:
-            s = "I have won!"
+            print("You Win")
+            ip2= socket.gethostbyname(socket.gethostname())
+            s= ip2 + " Wins the game"
             comms_socket1.send(s.encode("UTF-8"))
-
             comms_socket.close()
             break
         receive_pt = comms_socket.recv(64).decode("UTF-8")
@@ -67,7 +69,7 @@ def click_join():
         client_send_dt(enemySeaClient.flag)
         if enemySeaClient.flag == "2":
             print("You Loss")
-            s = "I have lost!"
+            s = ip + " Wins the game"
             comms_socket1.send(s.encode("UTF-8"))
             comms_socket.close()
             break
