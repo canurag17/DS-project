@@ -6,7 +6,7 @@ import server as Ser
 import client as Cli
 
 button = Tk()
-button.title("Battleship option")
+button.title("WarTank option")
 button.resizable(width=False, height=False)
 button.geometry()
 

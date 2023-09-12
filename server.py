@@ -1,5 +1,5 @@
 import socket
-import classSea as serCs
+import classGround as serCs
 
 def click_host():
     host_ip = socket.gethostbyname(socket.gethostname())
@@ -16,18 +16,18 @@ def click_host():
 
 
     # arrange your ship
-    enemySea = serCs.EnemySea()
-    yourSea = serCs.YourSea()
+    enemyGround = serCs.EnemyGround()
+    yourGround = serCs.YourGround()
 
     print("Let's play Battleship!")
 
 
     def layout():
-        print("Enemy sea:")
-        enemySea.print_board(enemySea.grid_en)
-        print("Your sea:")
-        yourSea.print_board(yourSea.grid_yo)
-        # yourSea.ships_info()
+        print("Enemy Ground:")
+        enemyGround.print_board(enemyGround.grid_en)
+        print("Your Ground:")
+        yourGround.print_board(yourGround.grid_yo)
+        # yourGround.ships_info()
 
 
     layout()
@@ -38,22 +38,22 @@ def click_host():
         # server receive points from client
         receive = connection.recv(64).decode("UTF-8")
         print(receive)
-        # server checks if shoot or not in yourSea  must return some state
-        enemySea.flag = str(yourSea.check_shoot(int(receive[1]), int(receive[0])))
-        print(enemySea.flag)
-        # server change the cell in yourSea
-        yourSea.draw_cell(int(receive[1]), int(receive[0]), str(enemySea.flag))
+        # server checks if shoot or not in yourGround  must return some state
+        enemyGround.flag = str(yourGround.check_shoot(int(receive[1]), int(receive[0])))
+        print(enemyGround.flag)
+        # server change the cell in yourGround
+        yourGround.draw_cell(int(receive[1]), int(receive[0]), str(enemyGround.flag))
         # show game situation now
         layout()
         # server send back state to client
-        server_send_dt(enemySea.flag)
-        if enemySea.flag == "2":
+        server_send_dt(enemyGround.flag)
+        if enemyGround.flag == "2":
             print("You Loss")
             # disconnect add later
             comms_socket.close()
             break
 
-        passY, passX = enemySea.target()
+        passY, passX = enemyGround.target()
         print(passY, passX)
         send_data = str(passY) + str(passX)
         print(send_data)
@@ -61,10 +61,10 @@ def click_host():
 
         rece_state = connection.recv(64).decode("UTF-8")
         print(rece_state)
-        enemySea.flag = int(rece_state)
-        enemySea.change_cell(passX, passY, enemySea.flag)
+        enemyGround.flag = int(rece_state)
+        enemyGround.change_cell(passX, passY, enemyGround.flag)
         layout()
-        if enemySea.flag == 2:
+        if enemyGround.flag == 2:
             print("You Win")
             # disconnect add later
             comms_socket.close()
